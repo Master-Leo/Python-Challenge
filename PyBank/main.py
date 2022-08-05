@@ -56,11 +56,13 @@ with open(budget_file_path) as csv_file:
 terminal_output = (
     f"```text\n"
     f"Financial Analysis\n"
+    f"-----------------------------\n"
     f"Total Months: {month_count}\n"
     f"Total: ${net_total}\n"
     f"Average Changes: ${average_change:.2f}\n"
     f"Greatest Increase in Profits: {greatest_month} ($ {greatest_profit})\n"
-    f"Greastest Decrease in Profits: {least_month} ($ {least_profit})\n"
+    f"Greatest Decrease in Profits: {least_month} ($ {least_profit})\n"
+    f"```\n"
 )
 
 print(terminal_output)
