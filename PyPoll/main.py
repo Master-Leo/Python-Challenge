@@ -2,8 +2,11 @@
 import os
 import csv
 
+
 #Set path
 data_path = os.path.join("Resources", "election_data.csv")
+
+output_file = os.path.join("Analysis", "election_Analysis.txt")
 
 #Set variables to calculate and list for votes,percentages,names
 total_vote = 0
@@ -28,13 +31,22 @@ with open(data_path) as csv_file:
             list[row[2]] = 0
         list[row[2]] += 1
 
-
 print(f"```text")
 print(f"Election Results")
 print(f"-----------------------------")
 print(f"Total Votes: {total_vote}")
 print(f"------------------------------")
 
+output = (
+    f"```text\n"
+    f"Election Results\n"
+    f"-----------------------------\n"
+    f"Total Votes: {total_vote}\n"
+    f"------------------------------\n"
+)
+
+with open(output_file, "w") as datafile:
+    datafile.write(output)
 
 #Percentage of votes won
 for individual in list:
@@ -42,7 +54,10 @@ for individual in list:
     percentage = votes / total_vote
     total = percentage * 100 
     print(f"{individual}: {total:.3f}% ({votes})")
+    output_two = (f"{individual}: {total:.3f}% ({votes})\n")
 
+    with open(output_file, "w") as datafile:
+        datafile.write(output_two)
 
 #Winner based on most votes
 if votes > total_won_votes:
@@ -54,8 +69,13 @@ print(f"Winner: {winner}")
 print(f"-----------------------------")
 print(f"```")
 
-output_file = os.path.join("Analysis", "election_Analysis.txt"
+output_three = (
+    f"-----------------------------\n"
+    f"Winner: {winner}\n"
+    f"-----------------------------\n"
+    f"```\n"
+)
 
 with open(output_file, "w") as datafile:
-   datafile.write()
-   
+    datafile.write(output_three)
+
