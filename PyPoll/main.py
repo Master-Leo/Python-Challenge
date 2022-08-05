@@ -26,32 +26,36 @@ with open(data_path) as csv_file:
         if row[2] not in candidates:
             candidates.append(row[2])
             list[row[2]] = 0
-        list[row[2]] = list + 1
+        list[row[2]] += 1
+
+
+print(f"```text")
+print(f"Election Results")
+print(f"-----------------------------")
+print(f"Total Votes: {total_vote}")
+print(f"------------------------------")
+
+
 #Percentage of votes won
 for individual in list:
-    votes = votes_earned[individual]
+    votes = list[individual]
     percentage = votes / total_vote
-    total = percentage * 100   
+    total = percentage * 100 
+    print(f"{individual}: {total:.3f}% ({votes})")
 
-output_one = (
-    f"```text\n"
-    f"Election Results\n"
-    f"-----------------------------\n"
-    f"Total Votes: {total_vote}\n"
-    f"-----------------------------\n"
-)
 
-output_two = (
-    f"{individual}: {total:.3f}% ({votes}"
-)
+#Winner based on most votes
+if votes > total_won_votes:
+    total_won_votes = votes
+    winner = individual 
 
-output_three = (
-    f"-----------------------------\n"
-    f"Winner: {winner}\n"
-    f"-----------------------------\n"
-    f"```/n"
-)
+print(f"-----------------------------")
+print(f"Winner: {winner}")
+print(f"-----------------------------")
+print(f"```")
 
-print(output_one)
-print(output_two)
-print(output_three)
+output_file = os.path.join("Analysis", "election_Analysis.txt"
+
+with open(output_file, "w") as datafile:
+   datafile.write()
+   
