@@ -6,20 +6,19 @@ import csv
 budget_file_path = os.path.join("Resources", "budget_data.csv")
 
 #Define Variables
-
 month = []
-profits = []
+change = []
 difference = []
 
-mouth_count = 0
+month_count = 0
+changes = 0 
 net_total = 0
 average_change = 0
 prev_profit = 0
-total_difference = 0
 
-greatest_profit = 0
-least_profit = 0
+greatest_profit = 0 
 greatest_month = " "
+least_profit = 0
 least_month = " "
 
 #Open CSV reader with header
@@ -29,20 +28,38 @@ with open(budget_file_path) as csv_file:
     print(f"Header: {csv_header}")
 
 #Add count for total months 
-    for row in csv_reder:
+    for row in csv_reader:
         month_count = month_count + 1
         net_total = net_total + int(row[1])
 
-#Append rows for Total amount of Profit/Loses in dataset
-    month.append(row[0])
-    total = int(row[1])
-    profits.append(total)
+#Append rows for Total amount of profit/losses in dataset
+        month.append(row[0])
+        total = int(row[1])
+        change.append(total)
 
-#Calculate Profit/Loses changes in dataset 
-    changes = 0 
-    if prev_profit != 0:
-        changes = total - prev_profit
-        difference.append(changes)
-    prev_profit = total
+#Append profit/losses changes in dataset 
+        if prev_profit != 0:
+            changes = total - prev_profit
+            difference.append(changes)
+        prev_profit = total
 
+#Calculate and locate greatest increase/decrease profits + date when occured
+        if changes > greatest_profit:
+            greatest_profit = changes
+            greatest_month = row[0]
     
+        if changes < least_profit:
+            least_profit = changes
+            least_month = row[0]
+            
+    average_change = sum(difference)/ len(difference)
+
+
+print(f"```text")
+print(f"Financial Analysis")
+print(f"Total Months: {month_count}")
+print(f"Total: ${net_total}")
+print(f"Average Changes: ${average_change:.2f}")
+print(f"Greastest Increase in Profits: {greatest_month} ($ {greatest_profit})")
+print(f"Greastest Decrease in Profits: {least_month} ($ {least_profit})")
+
