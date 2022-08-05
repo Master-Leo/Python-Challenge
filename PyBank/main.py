@@ -28,6 +28,21 @@ with open(budget_file_path) as csv_file:
     csv_header = next(csv_file)
     print(f"Header: {csv_header}")
 
+#Add count for total months 
+    for row in csv_reder:
+        month_count = month_count + 1
+        net_total = net_total + int(row[1])
 
+#Append rows for Total amount of Profit/Loses in dataset
+    month.append(row[0])
+    total = int(row[1])
+    profits.append(total)
 
+#Calculate Profit/Loses changes in dataset 
+    changes = 0 
+    if prev_profit != 0:
+        changes = total - prev_profit
+        difference.append(changes)
+    prev_profit = total
 
+    
