@@ -25,7 +25,6 @@ least_month = " "
 with open(budget_file_path) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
     csv_header = next(csv_file)
-    print(f"Header: {csv_header}")
 
 #Add count for total months 
     for row in csv_reader:
@@ -54,12 +53,19 @@ with open(budget_file_path) as csv_file:
             
     average_change = sum(difference)/ len(difference)
 
+terminal_output = (
+    f"```text\n"
+    f"Financial Analysis\n"
+    f"Total Months: {month_count}\n"
+    f"Total: ${net_total}\n"
+    f"Average Changes: ${average_change:.2f}\n"
+    f"Greatest Increase in Profits: {greatest_month} ($ {greatest_profit})\n"
+    f"Greastest Decrease in Profits: {least_month} ($ {least_profit})\n"
+)
 
-print(f"```text")
-print(f"Financial Analysis")
-print(f"Total Months: {month_count}")
-print(f"Total: ${net_total}")
-print(f"Average Changes: ${average_change:.2f}")
-print(f"Greastest Increase in Profits: {greatest_month} ($ {greatest_profit})")
-print(f"Greastest Decrease in Profits: {least_month} ($ {least_profit})")
+print(terminal_output)
 
+output_file = os.path.join("Analysis", "budget_analysis.txt")
+
+with open(output_file, "w") as datafile:
+   datafile.write(terminal_output)
