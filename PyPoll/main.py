@@ -10,26 +10,28 @@ output_file = os.path.join("Analysis", "election_Analysis.txt")
 
 #Set variables to calculate and list for votes,percentages,names
 total_vote = 0
-candidates = []
-votes_earned = 0 
+candidates = ""
+
 list = {}
-total_won_votes = 0
-winner = " "
+
+votes_won = 0
+winner = ""
 
 #Open and read CSV
 with open(data_path) as csv_file:
-     csv_reader = csv.reader(csv_file, delimiter=",")
-     csv_header = next(csv_file)
+    csv_reader = csv.reader(csv_file, delimiter=",")
+    csv_header = next(csv_reader)
 
-     for row in csv_reader:
+    for row in csv_reader:
         #Row count of votes
         total_vote = total_vote + 1
 
     #Total candidates who recieved votes and votes on for each
-        if row[2] not in candidates:
-            candidates.append(row[2])
-            list[row[2]] = 0
-        list[row[2]] += 1
+        candidates = row[2]
+        if candidates in list:
+            list[candidates] += 1
+        else:
+            list[candidates] = 1
 
 print(f"```text")
 print(f"Election Results")
@@ -50,24 +52,20 @@ with open(output_file, "w") as datafile:
 
 #Percentage of votes won
 for individual in list:
-    votes = list[individual]
-    percentage = votes / total_vote
-    total = percentage * 100 
-    print(f"{individual}: {total:.3f}% ({votes})")
-    output_two = (f"{individual}: {total:.3f}% ({votes})\n")
+    percentage = (list[candidates]/total_vote)*100
 
-    with open(output_file, "w") as datafile:
+    print(f"{individual}: {percentage:.3f}% ({list[candidates]})\n")
+
+    output_two = (f"{individual}: {percentage:.3f}% ({[candidates]})\n")
+
+    #Winner based on most votes
+    if list[candidates] > votes_won:
+        votes_wone = list[candidates]
+        winner = candidates 
+
+    with open(output_file, "a") as datafile:
         datafile.write(output_two)
 
-#Winner based on most votes
-if votes > total_won_votes:
-    total_won_votes = votes
-    winner = individual 
-
-print(f"-----------------------------")
-print(f"Winner: {winner}")
-print(f"-----------------------------")
-print(f"```")
 
 output_three = (
     f"-----------------------------\n"
@@ -75,7 +73,7 @@ output_three = (
     f"-----------------------------\n"
     f"```\n"
 )
+print(output_three)
 
-with open(output_file, "w") as datafile:
+with open(output_file, "a") as datafile:
     datafile.write(output_three)
-
